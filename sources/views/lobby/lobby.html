@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luque Academy</title>
+    <link rel="stylesheet" href="../../style/buttons.css">
+    <link rel="stylesheet" href="../../style/Style.css">
+    <link rel="stylesheet" href="../../style/navbar.css">
+    <link rel="stylesheet" href="../../style/whatsapp.css">
+    <link rel="stylesheet" href="lobby.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    
+    <main class="lobby-container">
+        <div class="background-image"></div>
+        
+        <div class="lobby-content">
+            <h1 class="floating-text">TU TRANSFORMACIÓN <br> <span class="gold-text">COMIENZA AQUÍ</span></h1>
+            
+            <p class="lobby-subtitle">La reunión está por comenzar. Selecciona tu método de acceso.</p>
+
+            <div class="lobby-actions">
+                <button onclick="accessLobby(1)" class="btn-lobby gold">CÓDIGO DEL DINERO</button>
+                
+                <button onclick="accessLobby(2)" class="btn-lobby outline">MÁQUINA DEL DINERO</button>
+                
+                <button onclick="accessLobby(3)" class="btn-lobby gold">MAESTRÍA DEL DINERO</button>
+            </div>
+        </div>
+    </main>
+     <!-- MODAL SIN ACCESO -->
+    <div id="noAccessModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeNoAccessModal()">&times;</button>
+            <h2>Acceso Denegado</h2>
+            <p>No tienes acceso a este módulo en este momento.</p>
+            <p class="modal-info">Si crees que es un error, contáctanos por WhatsApp para resolver tu acceso.</p>
+            <div class="modal-buttons">
+                <a id="modalWhatsappBtn" href="https://wa.me/573176484451?text=Necesito%20ayuda%20para%20entrar%20a%20una%20sesi%C3%B3n" class="btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                </a>
+                <button onclick="closeNoAccessModal()" class="btn-secondary">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/573176484451?text=Necesito%20ayuda%20para%20entrar%20a%20una%20sesi%C3%B3n" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span class="tooltip">¿Necesitas soporte?</span>
+    </a>
+    <script src="../../components/navbar.js"></script>
+    <script src="lobby.js"></script>
+</body>
+</html>
