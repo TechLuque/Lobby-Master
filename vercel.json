@@ -1,0 +1,10 @@
+{
+  "buildCommand": "echo 'Static build complete'",
+  "outputDirectory": ".",
+  "functions": {
+    "api/**.js": {
+      "runtime": "nodejs24.x"
+    }
+  },
+  "public": true
+}
