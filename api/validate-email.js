@@ -1,15 +1,14 @@
 /**
- * VERCEL SERVERLESS FUNCTION - POST /api/validate-email
- * Proxy seguro para AppScripts
+ * VERCEL SERVERLESS FUNCTION - Validación de email contra AppScripts
+ * POST /api/validate-email
  * 
- * Variables de entorno en Vercel Dashboard:
+ * Variables de entorno requeridas:
  * - APPSCRIPT_CODIGO
  * - APPSCRIPT_MAQUINA
  * - APPSCRIPT_MAESTRIA
  */
 
 export default async function handler(req, res) {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -18,29 +17,16 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Health check (GET)
   if (req.method === 'GET') {
     return res.status(200).json({ 
       status: 'OK',
-      message: 'API /api/validate-email funcionando',
-      timestamp: new Date().toISOString(),
-      variables: {
-        APPSCRIPT_CODIGO: process.env.APPSCRIPT_CODIGO ? '✅ Configurada' : '❌ NO configurada',
-        APPSCRIPT_MAQUINA: process.env.APPSCRIPT_MAQUINA ? '✅ Configurada' : '❌ NO configurada',
-        APPSCRIPT_MAESTRIA: process.env.APPSCRIPT_MAESTRIA ? '✅ Configurada' : '❌ NO configurada'
-      }
+      endpoint: 'POST /api/validate-email'
     });
   }
 
-  // Validar email (POST)
   if (req.method === 'POST') {
     try {
       const { email } = req.body;
-
-      console.log(`[DEBUG] Email recibido: ${email}`);
-      console.log(`[DEBUG] APPSCRIPT_CODIGO: ${process.env.APPSCRIPT_CODIGO ? 'Existe' : 'No existe'}`);
-      console.log(`[DEBUG] APPSCRIPT_MAQUINA: ${process.env.APPSCRIPT_MAQUINA ? 'Existe' : 'No existe'}`);
-      console.log(`[DEBUG] APPSCRIPT_MAESTRIA: ${process.env.APPSCRIPT_MAESTRIA ? 'Existe' : 'No existe'}`);
 
       if (!email) {
         return res.status(400).json({ 
@@ -49,52 +35,30 @@ export default async function handler(req, res) {
         });
       }
 
-      // URLs de AppScript desde variables de entorno de Vercel
       const appScripts = [
         process.env.APPSCRIPT_CODIGO,
         process.env.APPSCRIPT_MAQUINA,
         process.env.APPSCRIPT_MAESTRIA
       ];
 
-      // Validar que las variables están configuradas
       if (appScripts.some(url => !url)) {
-        console.error('❌ ERROR: Variables de entorno APPSCRIPT_* no configuradas en Vercel');
         return res.status(500).json({ 
           hasAccess: false, 
-          error: 'Variables de entorno no configuradas en Vercel Dashboard',
-          debug: {
-            APPSCRIPT_CODIGO: process.env.APPSCRIPT_CODIGO ? 'OK' : 'FALTA',
-            APPSCRIPT_MAQUINA: process.env.APPSCRIPT_MAQUINA ? 'OK' : 'FALTA',
-            APPSCRIPT_MAESTRIA: process.env.APPSCRIPT_MAESTRIA ? 'OK' : 'FALTA'
-          }
+          error: 'Error de configuración en el servidor'
         });
       }
 
-      console.log('[DEBUG] Iniciando validación contra 3 AppScripts...');
-
-      // Validar contra los 3 AppScripts en paralelo
       const results = await Promise.all(
-        appScripts.map((url, index) => {
-          console.log(`[DEBUG] Validando AppScript ${index + 1}...`);
-          return validateWithAppScript(url, email);
-        })
+        appScripts.map(url => validateWithAppScript(url, email))
       );
 
-      console.log('[DEBUG] Resultados:', results);
-
-      // Procesar resultados
-      const accessibleServers = results.map((r, index) => {
-        if (r && r.ok) {
-          console.log(`[DEBUG] AppScript ${index + 1}: Acceso permitido`);
-          return {
-            ok: r.ok,
-            join_url: r.join_url,
-            whatsapp: r.whatsapp
-          };
-        }
-        console.log(`[DEBUG] AppScript ${index + 1}: Acceso denegado o error`);
-        return null;
-      });
+      const accessibleServers = results.map(r => 
+        (r && r.ok) ? {
+          ok: r.ok,
+          join_url: r.join_url,
+          whatsapp: r.whatsapp
+        } : null
+      );
 
       const hasAccess = accessibleServers.some(s => s !== null);
       const whatsapp = results.find(r => r && r.whatsapp)?.whatsapp || null;
@@ -103,15 +67,13 @@ export default async function handler(req, res) {
         hasAccess,
         accessibleServers,
         whatsapp,
-        error: hasAccess ? null : 'Email no autorizado en ningún servidor'
+        error: hasAccess ? null : 'Email no autorizado'
       });
 
     } catch (error) {
-      console.error('❌ Error en /api/validate-email:', error.message);
-      console.error(error);
       return res.status(500).json({ 
         hasAccess: false, 
-        error: 'Error en el servidor: ' + error.message
+        error: 'Error en el servidor'
       });
     }
   }
@@ -119,34 +81,19 @@ export default async function handler(req, res) {
   return res.status(405).json({ error: 'Método no permitido' });
 }
 
-/**
- * Valida email en un AppScript específico
- */
 async function validateWithAppScript(appScriptUrl, email) {
   try {
-    console.log(`[DEBUG] Conectando a: ${appScriptUrl.substring(0, 50)}...`);
-    
     const params = new URLSearchParams();
     params.append('email', email);
 
     const response = await fetch(appScriptUrl, {
       method: 'POST',
-      body: params,
-      timeout: 10000
+      body: params
     });
 
-    console.log(`[DEBUG] Respuesta del AppScript: Status ${response.status}`);
-
-    if (!response.ok) {
-      console.log(`[DEBUG] Response no OK: ${response.status}`);
-      return null;
-    }
-
-    const data = await response.json();
-    console.log(`[DEBUG] Datos del AppScript:`, data);
-    return data;
+    if (!response.ok) return null;
+    return await response.json();
   } catch (error) {
-    console.error(`[DEBUG] Error conectando a AppScript:`, error.message);
     return null;
   }
 }

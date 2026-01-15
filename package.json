@@ -1,22 +1,10 @@
 {
   "name": "zoom-admin-panel",
   "version": "1.0.0",
-  "description": "Panel de administración seguro para validación de acceso a salas Zoom con variables de entorno en Vercel",
+  "description": "Panel de validación de acceso a salas Zoom",
   "private": true,
-  "scripts": {
-    "build": "echo 'Build complete'",
-    "start": "echo 'Deploy on Vercel'"
-  },
   "engines": {
     "node": "24.x"
   },
-  "keywords": [
-    "zoom",
-    "authentication",
-    "security",
-    "vercel",
-    "serverless"
-  ],
-  "author": "",
   "license": "MIT"
 }
