@@ -10,15 +10,13 @@
     border-radius: 50px;
     text-align: center;
     font-size: 30px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     transition: all 0.3s ease;
-    min-height: 60px;
-    min-width: 60px;
 }
 
 .whatsapp-float:hover {
@@ -51,78 +49,13 @@
     font-family: 'Font Awesome 6 Brands' !important;
 }
 
+/* Animaciones */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* ============================================
-   RESPONSIVE - Tablets
-   ============================================ */
-@media (max-width: 1024px) {
-    .whatsapp-float {
-        width: 55px;
-        height: 55px;
-        bottom: 35px;
-        right: 35px;
-    }
-
-    .whatsapp-float i {
-        font-size: 1.8rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE - Tablets Medianos
-   ============================================ */
 @media (max-width: 768px) {
-    .whatsapp-float {
-        width: 55px;
-        height: 55px;
-        bottom: 25px;
-        right: 25px;
-    }
-
-    .whatsapp-float i {
-        font-size: 1.6rem;
-    }
-
-    .tooltip {
-        font-size: 11px;
-        right: 70px;
-    }
-
-    .product-title {
-        font-size: 2.5rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE - Mobile
-   ============================================ */
-@media (max-width: 480px) {
-    .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 20px;
-        right: 20px;
-        min-height: 50px;
-        min-width: 50px;
-    }
-
-    .whatsapp-float i {
-        font-size: 1.4rem;
-    }
-
-    .tooltip {
-        font-size: 10px;
-        right: 65px;
-        padding: 4px 10px;
-    }
+    .product-title { font-size: 2.5rem; }
+    .whatsapp-float { bottom: 20px; right: 20px; }
 }

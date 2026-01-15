@@ -21,57 +21,24 @@ body {
     background-color: var(--bg-black);
     color: var(--white);
     min-height: 100vh;
-    overflow-x: hidden;
-}
-
-body.lobby-page {
-    height: auto !important;
-    overflow-y: auto !important;
+    overflow: hidden; 
 }
 
 .lobby-container {
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
+    overflow: hidden; 
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     color: var(--white);
     text-align: center;
-    padding: 20px;
-}
-
-.background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('../../assets/images/CDD_Home_02.jpg') no-repeat center center/cover;
-    z-index: -1;
-}
-
-.background-image::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.lobby-content {
-    z-index: 1;
-    max-width: 900px;
-    width: 100%;
-    animation: fadeInUp 1.2s ease-out;
 }
 
 .lobby-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
 .lobby-header h1 {
@@ -79,29 +46,19 @@ body.lobby-page {
     margin-bottom: 10px;
     letter-spacing: 2px;
     font-weight: 900;
-    word-wrap: break-word;
-    word-break: break-word;
-    overflow-wrap: break-word;
 }
 
 .subtitle {
     color: var(--text-gray);
     font-size: 1.1rem;
-    padding: 0 20px;
 }
 
+/* Grid de salas */
 .lobbies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     margin-bottom: 40px;
-}
-
-.lobby-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    padding: 40px 0;
 }
 
 .lobby-card {
@@ -153,84 +110,12 @@ body.lobby-page {
     font-size: 0.95rem;
 }
 
-.floating-text {
-    font-size: 5rem;
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -2px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    word-wrap: break-word;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.gold-text {
-    color: var(--gold);
-}
-
-.lobby-subtitle {
-    font-size: 1.1rem;
-    color: #cccccc;
-    margin-bottom: 40px;
-    font-weight: 400;
-    padding: 0 20px;
-}
-
-.lobby-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 0 20px;
-}
-
-.btn-lobby {
-    padding: 18px 35px;
-    font-weight: 900;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-decoration: none !important;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-}
-
-.btn-lobby.gold {
-    background-color: var(--gold);
-    color: #000;
-    border: none;
-}
-
-.btn-lobby.gold:hover {
-    background-color: rgb(39, 39, 39);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-.btn-lobby.outline {
-    background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-
-.btn-lobby.outline:hover {
-    background: var(--white);
-    color: #000;
-    transform: translateY(-5px);
-}
-
+/* Mensaje de sin acceso */
 .no-access-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 70vh;
-    padding: 20px;
 }
 
 .no-access-card {
@@ -240,7 +125,6 @@ body.lobby-page {
     padding: 60px 40px;
     text-align: center;
     max-width: 500px;
-    width: 100%;
 }
 
 .no-access-card i {
@@ -262,6 +146,150 @@ body.lobby-page {
     font-size: 1rem;
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+    .lobby-container {
+        padding: 40px 15px 20px;
+    }
+
+    .lobby-header h1 {
+        font-size: 2rem;
+    }
+
+    .lobbies-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .lobby-card {
+        padding: 30px 20px;
+    }
+
+    .lobby-icon {
+        font-size: 2.5rem;
+    }
+
+    .no-access-card {
+        padding: 40px 20px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main) !important;
+}
+
+.lobby-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+    text-align: center;
+}
+
+/* Imagen de fondo  */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../../assets/images/CDD_Home_02.jpg') no-repeat center center/cover;
+    z-index: -1;
+}
+
+/* Overlay para que el texto resalte */
+.background-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Esto añade una capa negra al 50% de opacidad */
+}
+
+.lobby-content {
+    z-index: 1;
+    max-width: 900px;
+    padding: 20px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.floating-text {
+    /* Estilo Klipsan: Letras muy grandes y juntas */
+    font-size: 5rem; 
+    font-weight: 900; /* Peso máximo para impacto */
+    line-height: 0.9; /* Interlineado comprimido */
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.gold-text {
+    color: var(--gold);
+}
+
+.lobby-subtitle {
+    font-size: 1.1rem;
+    color: #cccccc;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* Botones de Acceso */
+.lobby-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap; 
+}
+
+.btn-lobby {
+    padding: 18px 35px;
+    font-weight: 900; 
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none !important; 
+    display: inline-block;           
+    text-align: center;              
+}
+
+.btn-lobby.gold {
+    background-color: var(--gold);
+    color: #000;
+    border: none;
+}
+
+.btn-lobby.gold:hover {
+    background-color: rgb(39, 39, 39);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.btn-lobby.outline {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.btn-lobby.outline:hover {
+    background: var(--white);
+    color: #000;
+    transform: translateY(-5px);
+}
+
+/* Animación de entrada */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -273,17 +301,61 @@ body.lobby-page {
     }
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
+/* Responsivo para celulares */
+@media (max-width: 768px) {
+    .floating-text {
+        font-size: 2.8rem;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .lobby-actions {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 20px;
+    }
+    .btn-lobby {
+        width: 100%;
     }
 }
 
+/* Contenedor de las tarjetas del Lobby */
+.lobby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+    .lobby-header {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .lobby-header h1 {
+        font-size: 1.8rem; 
+    }
+
+    .lobby-grid {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .lobby-card {
+        margin-bottom: 15px;
+    }
+
+    .sidebar {
+        display: none; 
+    }
+}
+
+body.lobby-page {
+    height: auto !important; 
+    overflow-y: auto !important; 
+}
+
+/* ============================================
+   MODAL SIN ACCESO
+   ============================================ */
 .modal {
     display: none;
     position: fixed;
@@ -308,6 +380,17 @@ body.lobby-page {
     border: 1px solid #333;
     position: relative;
     animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .modal-close {
@@ -399,103 +482,7 @@ body.lobby-page {
     font-family: 'Font Awesome 6 Brands' !important;
 }
 
-/* ============================================
-   RESPONSIVE - Tablets
-   ============================================ */
-@media (max-width: 1024px) {
-    .floating-text {
-        font-size: 3.5rem;
-    }
-
-    .lobby-header h1 {
-        font-size: 2.5rem;
-    }
-
-    .lobby-card h3 {
-        font-size: 1.5rem;
-    }
-
-    .btn-lobby {
-        padding: 16px 30px;
-        font-size: 0.85rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE - Tablets Medianos
-   ============================================ */
 @media (max-width: 768px) {
-    .lobby-container {
-        min-height: 100vh;
-        padding: 15px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .lobby-content {
-        padding: 0;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .floating-text {
-        font-size: 2.5rem;
-        letter-spacing: -1px;
-    }
-
-    .lobby-header h1 {
-        font-size: 2rem;
-        padding: 0 15px;
-    }
-
-    .lobby-subtitle {
-        font-size: 0.95rem;
-        padding: 0 15px;
-        margin-bottom: 30px;
-    }
-
-    .lobbies-grid,
-    .lobby-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        margin-bottom: 30px;
-        padding: 20px 0;
-    }
-
-    .lobby-card {
-        padding: 25px 15px;
-        margin-bottom: 15px;
-    }
-
-    .lobby-icon {
-        font-size: 2.5rem;
-    }
-
-    .lobby-card h3 {
-        font-size: 1.4rem;
-    }
-
-    .lobby-desc {
-        font-size: 0.9rem;
-    }
-
-    .lobby-actions {
-        flex-direction: column;
-        width: 100%;
-        padding: 0 15px;
-        gap: 12px;
-    }
-
-    .btn-lobby {
-        width: 100%;
-        padding: 14px 20px;
-        font-size: 0.8rem;
-    }
-
-    .no-access-card {
-        padding: 40px 20px;
-    }
-
     .modal-content {
         padding: 30px 20px;
         max-width: 90%;
@@ -517,144 +504,5 @@ body.lobby-page {
     .modal-buttons a {
         width: 100%;
         min-width: auto;
-    }
-
-    .sidebar {
-        display: none;
-    }
-}
-
-/* ============================================
-   RESPONSIVE - Mobile
-   ============================================ */
-@media (max-width: 480px) {
-    .lobby-container {
-        min-height: 100vh;
-        padding: 10px;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .lobby-content {
-        width: 100%;
-        max-width: 100%;
-        padding: 0;
-    }
-
-    .floating-text {
-        font-size: 1.8rem;
-        line-height: 1;
-        letter-spacing: -0.5px;
-        margin-bottom: 15px;
-    }
-
-    .lobby-header h1 {
-        font-size: 1.5rem;
-        padding: 0 10px;
-        margin-bottom: 20px;
-    }
-
-    .subtitle {
-        font-size: 0.9rem;
-        padding: 0 10px;
-    }
-
-    .lobby-subtitle {
-        font-size: 0.85rem;
-        padding: 0 10px;
-        margin-bottom: 20px;
-    }
-
-    .lobbies-grid,
-    .lobby-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        padding: 0;
-        width: 100%;
-    }
-
-    .lobby-card {
-        padding: 20px 12px;
-    }
-
-    .lobby-icon {
-        font-size: 2rem;
-        margin-bottom: 15px;
-    }
-
-    .lobby-card h3 {
-        font-size: 1.2rem;
-    }
-
-    .lobby-desc {
-        font-size: 0.8rem;
-        margin-bottom: 15px;
-    }
-
-    .lobby-actions {
-        gap: 10px;
-        padding: 0;
-        width: 100%;
-    }
-
-    .btn-lobby {
-        padding: 12px 15px;
-        font-size: 0.7rem;
-        min-height: 44px;
-    }
-
-    .no-access-container {
-        min-height: 100vh;
-        padding: 15px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .no-access-card {
-        padding: 30px 15px;
-        width: 100%;
-    }
-
-    .no-access-card i {
-        font-size: 3rem;
-    }
-
-    .no-access-card h2 {
-        font-size: 1.4rem;
-    }
-
-    .no-access-card p {
-        font-size: 0.9rem;
-    }
-
-    .modal-content {
-        padding: 20px 15px;
-    }
-
-    .modal-close {
-        right: 15px;
-        top: 15px;
-    }
-
-    .modal-content h2 {
-        font-size: 1.3rem;
-    }
-
-    .modal-content p {
-        font-size: 0.9rem;
-    }
-
-    .modal-buttons {
-        flex-direction: column;
-    }
-
-    .modal-buttons button,
-    .modal-buttons a {
-        width: 100%;
-        padding: 12px 15px;
-        font-size: 0.75rem;
-        min-height: 44px;
     }
 }

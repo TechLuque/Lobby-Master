@@ -1,8 +1,12 @@
+/* 1. Importación de Google Fonts (Indispensable para que funcione Montserrat) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
 /* Configuración General */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* CORRECCIÓN: Montserrat se aplica aquí para todo el proyecto */
     font-family: 'Montserrat'; 
 }
 .fab, .fas, .far, .fa-brands, .fa-solid {
@@ -13,7 +17,7 @@ body {
     background-color: #000;
     color: #fff;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 /* --- NAVEGACIÓN (Navbar) --- */
@@ -23,11 +27,10 @@ body {
     align-items: center;
     padding: 20px 50px;
     background-color: #000;
-    flex-wrap: wrap;
-    gap: 20px;
 }
 
 .logo {
+    /* Estilo Klipsan: Grueso y compacto */
     font-weight: 900; 
     font-size: 1.8rem;
     letter-spacing: -1px;
@@ -37,7 +40,6 @@ body {
     display: flex;
     list-style: none;
     gap: 30px;
-    flex-wrap: wrap;
 }
 
 .nav-links a {
@@ -50,7 +52,7 @@ body {
 }
 
 .nav-links a:hover {
-    color: #D4AF37;
+    color: #D4AF37; /* Dorado Luque Academy */
 }
 
 /* --- HERO SECTION  --- */
@@ -66,20 +68,19 @@ body {
 }
 
 .hero-left h1 {
+    /* Estilo de impacto: Letras grandes y juntas */
     font-size: 5rem;
     line-height: 0.85; 
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -2px;
-    word-wrap: break-word;
-    word-break: break-word;
 }
 
 .hero-right p {
     font-size: 1.15rem;
     color: #ccc;
     margin-bottom: 30px;
-    font-weight: 400;
+    font-weight: 400; /* Peso normal para lectura */
 }
 
 /* --- BOTONES --- */
@@ -118,130 +119,6 @@ body {
 .btn-outline:hover {
     background: white;
     color: black;
-}
-
-/* RESPONSIVE - Tablets */
-@media (max-width: 1024px) {
-    .navbar {
-        padding: 15px 30px;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-    }
-
-    .nav-links {
-        gap: 20px;
-    }
-
-    .nav-links a {
-        font-size: 0.75rem;
-    }
-
-    .hero {
-        padding: 40px 30px;
-    }
-
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .hero-left h1 {
-        font-size: 3rem;
-    }
-}
-
-/* RESPONSIVE - Mobile */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 15px 20px;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .nav-links {
-        gap: 15px;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .nav-links a {
-        font-size: 0.65rem;
-        padding: 5px 10px;
-    }
-
-    .hero {
-        padding: 30px 15px;
-    }
-
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .hero-left h1 {
-        font-size: 2rem;
-        line-height: 1;
-        letter-spacing: -1px;
-    }
-
-    .hero-right p {
-        font-size: 0.95rem;
-    }
-
-    .btn-main {
-        padding: 14px 20px;
-        font-size: 0.85rem;
-    }
-
-    .btn-outline {
-        padding: 8px 15px;
-        font-size: 0.65rem;
-    }
-}
-
-/* RESPONSIVE - Mobile Pequeño */
-@media (max-width: 480px) {
-    .navbar {
-        padding: 12px 10px;
-    }
-
-    .logo {
-        font-size: 1rem;
-    }
-
-    .nav-links {
-        gap: 10px;
-    }
-
-    .nav-links a {
-        font-size: 0.6rem;
-        padding: 3px 8px;
-    }
-
-    .hero {
-        padding: 20px 10px;
-    }
-
-    .hero-left h1 {
-        font-size: 1.5rem;
-    }
-
-    .hero-right p {
-        font-size: 0.85rem;
-    }
-
-    .btn-main {
-        padding: 12px 15px;
-        font-size: 0.75rem;
-    }
 }
 
 
