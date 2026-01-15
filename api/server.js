@@ -19,15 +19,21 @@ export default async function handler(req, res) {
   }
 
   // Health check
-  if (req.method === 'GET' && req.url.includes('/health')) {
+  if (req.method === 'GET') {
     return res.status(200).json({ 
-      status: 'OK', 
-      timestamp: new Date().toISOString() 
+      status: 'OK',
+      message: 'API servidor funcionando',
+      timestamp: new Date().toISOString(),
+      variables: {
+        APPSCRIPT_CODIGO: process.env.APPSCRIPT_CODIGO ? 'Configurada' : 'NO configurada',
+        APPSCRIPT_MAQUINA: process.env.APPSCRIPT_MAQUINA ? 'Configurada' : 'NO configurada',
+        APPSCRIPT_MAESTRIA: process.env.APPSCRIPT_MAESTRIA ? 'Configurada' : 'NO configurada'
+      }
     });
   }
 
-  // Validar email
-  if (req.method === 'POST' && req.url.includes('/validate-email')) {
+  // Validar email (POST)
+  if (req.method === 'POST') {
     try {
       const { email } = req.body;
 
@@ -48,9 +54,12 @@ export default async function handler(req, res) {
       // Validar que las variables están configuradas
       if (appScripts.some(url => !url)) {
         console.error('ERROR: Variables de entorno APPSCRIPT_* no configuradas en Vercel');
+        console.error('APPSCRIPT_CODIGO:', process.env.APPSCRIPT_CODIGO ? 'OK' : 'FALTA');
+        console.error('APPSCRIPT_MAQUINA:', process.env.APPSCRIPT_MAQUINA ? 'OK' : 'FALTA');
+        console.error('APPSCRIPT_MAESTRIA:', process.env.APPSCRIPT_MAESTRIA ? 'OK' : 'FALTA');
         return res.status(500).json({ 
           hasAccess: false, 
-          error: 'Error de configuración del servidor' 
+          error: 'Error de configuración del servidor - Variables de entorno no configuradas'
         });
       }
 
@@ -82,12 +91,13 @@ export default async function handler(req, res) {
       console.error('Error en /api/validate-email:', error);
       return res.status(500).json({ 
         hasAccess: false, 
-        error: 'Error en el servidor' 
+        error: 'Error en el servidor: ' + error.message
       });
     }
   }
 
-  return res.status(404).json({ error: 'Endpoint no encontrado' });
+  return res.status(405).json({ error: 'Método no permitido' });
+}
 }
 
 /**
