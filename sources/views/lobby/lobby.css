@@ -36,7 +36,7 @@ body.lobby-page {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: relative;
     color: var(--white);
     text-align: center;
     padding: 20px;
@@ -426,12 +426,16 @@ body.lobby-page {
    ============================================ */
 @media (max-width: 768px) {
     .lobby-container {
-        min-height: auto;
+        min-height: 100vh;
         padding: 15px;
+        justify-content: center;
+        align-items: center;
     }
 
     .lobby-content {
         padding: 0;
+        width: 100%;
+        max-width: 100%;
     }
 
     .floating-text {
@@ -525,7 +529,18 @@ body.lobby-page {
    ============================================ */
 @media (max-width: 480px) {
     .lobby-container {
+        min-height: 100vh;
         padding: 10px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lobby-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
     }
 
     .floating-text {
@@ -556,7 +571,8 @@ body.lobby-page {
     .lobby-grid {
         grid-template-columns: 1fr;
         gap: 15px;
-        padding: 0 10px;
+        padding: 0;
+        width: 100%;
     }
 
     .lobby-card {
@@ -579,7 +595,8 @@ body.lobby-page {
 
     .lobby-actions {
         gap: 10px;
-        padding: 0 10px;
+        padding: 0;
+        width: 100%;
     }
 
     .btn-lobby {
@@ -589,12 +606,15 @@ body.lobby-page {
     }
 
     .no-access-container {
-        min-height: 50vh;
+        min-height: 100vh;
         padding: 15px;
+        justify-content: center;
+        align-items: center;
     }
 
     .no-access-card {
         padding: 30px 15px;
+        width: 100%;
     }
 
     .no-access-card i {
