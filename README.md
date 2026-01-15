@@ -1,104 +1,93 @@
 # 🔐 Zoom Admin Panel - Sistema de Autenticación Seguro
 
-Panel de administración para validación segura de acceso a salas Zoom con protección de datos sensibles.
+Panel de administración para validación segura de acceso a salas Zoom con variables de entorno protegidas en Vercel.
 
-## ⚡ Cambios de Seguridad Recientes
+## ✅ Sistema Seguro con Vercel
 
-Se ha implementado un **sistema de proxy backend** para proteger las URLs de AppScript. Ahora las URLs están en variables de entorno y **NO se exponen en el navegador**.
+Las URLs de AppScript están **protegidas en variables de entorno de Vercel** (nunca en el código).
 
-### Antes ❌
-- URLs de AppScript visibles en el navegador
-- Datos de clientes expuestos en el inspector de red
-- Cualquiera podía ver y reutilizar las URLs
+### ¿Cómo funciona?
 
-### Ahora ✅
-- URLs protegidas en variables de entorno
-- Backend actúa como proxy seguro
-- Datos nunca se exponen al cliente
-- URLs pueden rotarse fácilmente
+```
+Cliente (Navegador)
+    ↓
+Petición a: /api/validate-email (TU DOMINIO)
+    ↓
+Vercel Serverless Function (api/server.js)
+    ↓
+Lee variables de entorno (APPSCRIPT_*)
+    ↓
+Valida con AppScripts
+    ↓
+Retorna datos al cliente (SIN exponer URLs)
+```
 
-## 🚀 Inicio Rápido
+## 🚀 Despliegue en Vercel (TODO EN LA NUBE)
 
-### 1. Configuración Local
+### 1. Conectar Repositorio a Vercel
+
+1. Ve a https://vercel.com/dashboard
+2. Click **"Add New"** → **"Project"**
+3. Selecciona tu repositorio (GitHub, GitLab, etc.)
+4. Click **"Import"**
+
+### 2. Agregar Variables de Entorno
+
+1. En **Settings** → **Environment Variables**
+2. Agrega 3 variables:
+
+```
+APPSCRIPT_CODIGO = https://script.google.com/macros/s/.../exec
+APPSCRIPT_MAQUINA = https://script.google.com/macros/s/.../exec
+APPSCRIPT_MAESTRIA = https://script.google.com/macros/s/.../exec
+```
+
+3. Click **"Save"**
+
+### 3. Deploy
 
 ```bash
-# Copia la plantilla de variables de entorno
-cp .env.example .env.local
+git push origin main
 
-# Edita .env.local y agregar tus URLs de AppScript reales
-# (archivo abierto en tu editor)
+# Vercel automáticamente despliega cuando haces push
 ```
 
-### 2. Instalar y Ejecutar
+¡Listo! Tu proyecto está en vivo. 🎉
 
-```bash
-# Instalar dependencias
-npm install
+## 📝 Cambios en el Código
 
-# Ejecutar servidor de desarrollo
-npm run dev
+### ✅ conf.js
+- Ahora apunta a `/api/validate-email` (tu servidor)
+- NO contiene URLs de AppScript
 
-# El servidor corre en: http://localhost:3000
-```
+### ✅ api/server.js
+- Serverless function (Vercel la ejecuta automáticamente)
+- Lee variables de entorno de Vercel
+- Valida con AppScripts de forma segura
 
-### 3. Verificar que funciona
+### ✅ login.js
+- Usa `validateEmailWithBackend()` en lugar de URLs directas
+- Apunta a `/api/validate-email`
 
-En otra terminal:
-```bash
-curl -X POST http://localhost:3000/api/health
-# Respuesta: {"status":"OK","timestamp":"..."}
-```
+## 🔍 Verificar Seguridad
 
-### 4. Abrir en navegador
+1. Abre tu proyecto en Vercel: `https://tu-proyecto.vercel.app`
+2. Abre DevTools (F12) → Tab "Network"
+3. Intenta login
+4. **Observa:**
+   - ✅ Peticiones a: `/api/validate-email`
+   - ❌ NO verás: `script.google.com`
 
-```
-http://localhost:3000
-```
-
-## 🌐 Despliegue en Vercel
-
-### Paso 1: Preparar proyecto
-```bash
-git add .
-git commit -m "Implementar sistema de autenticación seguro"
-git push
-```
-
-### Paso 2: Conectar con Vercel
-```bash
-# Instalar Vercel CLI
-npm install -g vercel
-
-# Desplegar
-vercel
-```
-
-### Paso 3: Agregar variables de entorno en Vercel Dashboard
-
-1. Accede a: https://vercel.com/dashboard
-2. Selecciona tu proyecto
-3. Ve a **Settings → Environment Variables**
-4. Agrega (en producción):
-   ```
-   APPSCRIPT_CODIGO = https://script.google.com/macros/s/.../exec
-   APPSCRIPT_MAQUINA = https://script.google.com/macros/s/.../exec
-   APPSCRIPT_MAESTRIA = https://script.google.com/macros/s/.../exec
-   ```
-5. Haz deploy en producción:
-   ```bash
-   vercel --prod
-   ```
-
-## 📂 Estructura del Proyecto
+## 📂 Estructura
 
 ```
-Zoom/
+Proyecto/
 ├── api/
-│   └── server.js              ← Backend Express (proxy seguro)
+│   └── server.js              ← Vercel la ejecuta automáticamente
 ├── sources/
 │   ├── components/
 │   │   └── configuracion/
-│   │       └── conf.js        ← Config del cliente (usa API)
+│   │       └── conf.js        ← Config (no hardcoded)
 │   └── views/
 │       ├── codigo/
 │       ├── login/
@@ -106,124 +95,30 @@ Zoom/
 │       ├── lobby/
 │       ├── maestria/
 │       └── maquina/
-├── .env.example               ← Plantilla de variables
-├── .env.local                 ← (NO COMMITTEAR) Tus URLs reales
+├── .env.example               ← Documentación
 ├── .gitignore
 ├── package.json
-├── vercel.json
-├── GUIA_SEGURIDAD.md         ← Documentación de seguridad
-└── DOCUMENTACION_PROYECTO.md
+└── vercel.json
 ```
 
-## 🔍 Verificar Seguridad
+## 🛡️ Seguridad
 
-### En DevTools del Navegador (F12)
+- ✅ URLs de AppScript protegidas en Vercel
+- ✅ No hay configuración local
+- ✅ No hay `.env` en el código
+- ✅ Auto-deploy con Git
 
-1. Ve a **Tab "Network"** (Red)
-2. Intenta hacer login
-3. **Verifica que ves:**
-   - ✅ Petición a: `https://tudominio.com/api/validate-email`
-   - ❌ **NO** deberías ver URLs de: `script.google.com`
+## 🚨 Si se expone una URL
 
-## 🛠️ API Endpoints
+1. Regenera la URL en AppScript
+2. Actualiza la variable en Vercel Dashboard
+3. **Listo** - Automáticamente actualizado
 
-### Validar Email
-```bash
-POST /api/validate-email
-Content-Type: application/json
+## 📞 Documentación
 
-{
-  "email": "usuario@example.com"
-}
-
-Respuesta exitosa:
-{
-  "hasAccess": true,
-  "accessibleServers": [
-    { "ok": true, "join_url": "...", "whatsapp": "..." },
-    null,
-    { "ok": true, "join_url": "...", "whatsapp": "..." }
-  ],
-  "whatsapp": "573176484451"
-}
-
-Respuesta sin acceso:
-{
-  "hasAccess": false,
-  "error": "Email no autorizado"
-}
-```
-
-### Health Check
-```bash
-GET /api/health
-
-Respuesta:
-{
-  "status": "OK",
-  "timestamp": "2024-01-15T10:30:00.000Z"
-}
-```
-
-## 🔐 Variables de Entorno
-
-### Desarrollo (`.env.local`)
-```
-APPSCRIPT_CODIGO=https://...
-APPSCRIPT_MAQUINA=https://...
-APPSCRIPT_MAESTRIA=https://...
-PORT=3000
-NODE_ENV=development
-```
-
-### Producción (Vercel Dashboard)
-- Agrega las mismas variables en: Settings → Environment Variables
-- **NO** es necesario agregar PORT (Vercel lo maneja)
-
-## 📝 Archivos Modificados
-
-- ✅ `sources/components/configuracion/conf.js` - Sin URLs hardcodeadas
-- ✅ `sources/views/login/login.js` - Usa nuevo backend
-- ✨ `api/server.js` - Nuevo servidor proxy
-- ✨ `.env.example` - Nueva plantilla
-- ✨ `.gitignore` - Protege variables sensibles
-- ✨ `vercel.json` - Config despliegue
-- ✨ `package.json` - Dependencias Node.js
-
-## 🚨 Importante: Seguridad
-
-1. **NUNCA** commitees `.env` o `.env.local`
-2. Si una URL se expone, regenérala en AppScript
-3. Solo usa HTTPS en producción
-4. Rotación de URLs cada 3-6 meses
-
-## 📞 Troubleshooting
-
-### Error: "Cannot find module 'dotenv'"
-```bash
-npm install dotenv
-```
-
-### Error: "EADDRINUSE: address already in use :::3000"
-```bash
-# Cambiar puerto en .env.local o matar proceso
-lsof -ti:3000 | xargs kill -9
-```
-
-### Variables de entorno no cargan
-```bash
-# Verificar que .env.local existe en raíz del proyecto
-# Verificar sintaxis: VARIABLE=valor (sin comillas)
-# Reiniciar servidor: npm run dev
-```
-
-## 📚 Más Información
-
-- [GUIA_SEGURIDAD.md](./GUIA_SEGURIDAD.md) - Guía detallada de seguridad
-- [Documentación Express](https://expressjs.com/)
-- [Documentación Vercel](https://vercel.com/docs)
+- [GUIA_SEGURIDAD.md](./GUIA_SEGURIDAD.md) - Guía de seguridad
+- [ARQUITECTURA.md](./ARQUITECTURA.md) - Diagramas y flujos
 
 ---
 
-**Última actualización:** Enero 2026
-**Versión:** 1.0.0 (Sistema de seguridad implementado)
+**Sistema seguro en Vercel.** ✅

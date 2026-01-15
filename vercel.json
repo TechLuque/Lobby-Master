@@ -1,16 +1,9 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "echo 'Build complete'",
   "outputDirectory": ".",
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/server.js"
+  "functions": {
+    "api/**.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
-  "env": [
-    "APPSCRIPT_CODIGO",
-    "APPSCRIPT_MAQUINA",
-    "APPSCRIPT_MAESTRIA",
-    "NODE_ENV"
-  ]
+  }
 }

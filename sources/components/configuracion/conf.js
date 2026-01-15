@@ -1,18 +1,16 @@
 /**
  * CONFIGURACIÓN DE APLICACIÓN
- * Las URLs de AppScript se cargan desde un servidor backend (API) en lugar de estar hardcodeadas
- * Esto previene la exposición de URLs sensibles en el inspector de redes del navegador
+ * Las URLs de AppScript se protegen con variables de entorno en Vercel
+ * El cliente llama a una serverless function que maneja la validación de forma segura
  */
 
-// URL base del API Backend (cambia según el entorno)
-// En producción en Vercel: https://tu-dominio.vercel.app/api
-// En desarrollo local: http://localhost:3000/api
-const API_BASE_URL = window.location.hostname === 'localhost' 
-  ? 'http://localhost:3000/api'
-  : `${window.location.protocol}//${window.location.hostname}/api`;
+// URL base del API (Vercel serverless function)
+// Automáticamente apunta a tu dominio de Vercel
+const API_BASE_URL = '/api';
 
 /**
- * Valida email contra los 3 AppScripts (ahora a través del backend)
+ * Valida email a través de la serverless function de Vercel
+ * Las URLs de AppScript nunca se exponen al cliente
  * @param {string} email - Email a validar
  * @returns {Promise} Respuesta del servidor
  */
