@@ -1,10 +1,5 @@
-// Configuración - 3 Apps Scripts diferentes
-const APPS_SCRIPTS = [
-  'https://script.google.com/macros/s/AKfycbyPjTaAQEWpI-uAVsEGKVtCklKcxNVa4H6tz5kVGaoUynvbwNOCN8owY243E7Ksgk5w/exec',  /*codigo*/
-  'https://script.google.com/macros/s/AKfycbztxJqZlrHcDNksOZLkJoIYWr1fG9h_3iIFNFpGNW5I_nFLv0ra1jV_-7gOua0VSlCl/exec',  /*maquina*/
-  'https://script.google.com/macros/s/AKfycbwpG_3bPvdvDNA25TgyYC6GBs0KZgNdfPG7cZvGV2p3rdgAWjtKls5l_QSvV21lbZuE/exec'   /*maestria*/
-];
-const REDIRECT_PAGE = '../lobby/lobby.html';
+// Importar configuración desde conf.js
+// APPS_SCRIPTS y REDIRECT_PAGE se definen en ../../configuracion/conf.js
 
 async function handleLogin(event) {
   event.preventDefault();
