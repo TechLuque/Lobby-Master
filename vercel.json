@@ -1,0 +1,16 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/server.js"
+    }
+  ],
+  "env": [
+    "APPSCRIPT_CODIGO",
+    "APPSCRIPT_MAQUINA",
+    "APPSCRIPT_MAESTRIA",
+    "NODE_ENV"
+  ]
+}

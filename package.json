@@ -1,0 +1,28 @@
+{
+  "name": "zoom-admin-panel",
+  "version": "1.0.0",
+  "description": "Panel de administración seguro para validación de acceso a salas Zoom",
+  "main": "api/server.js",
+  "scripts": {
+    "dev": "node api/server.js",
+    "start": "node api/server.js",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": [
+    "zoom",
+    "authentication",
+    "security"
+  ],
+  "author": "",
+  "license": "MIT"
+}

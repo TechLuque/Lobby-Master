@@ -1,5 +1,5 @@
 // Importar configuración desde conf.js
-// APPS_SCRIPTS y REDIRECT_PAGE se definen en ../../configuracion/conf.js
+// Ahora usa validateEmailWithBackend en lugar de URLs de AppScript directas
 
 async function handleLogin(event) {
   event.preventDefault();
@@ -17,65 +17,32 @@ async function handleLogin(event) {
   submitBtn.textContent = 'Verificando...';
   
   try {
-    // Validar contra los 3 Apps Scripts en paralelo
-    const results = await Promise.all(
-      APPS_SCRIPTS.map(url => validateEmailInServer(url, email))
-    );
+    // Validar email a través del backend (que se conecta a AppScripts de forma segura)
+    const result = await validateEmailWithBackend(email);
     
-    // Guardar los resultados manteniendo los índices originales
-    // accessibleServers[0] = resultado del Apps Script 1 (código)
-    // accessibleServers[1] = resultado del Apps Script 2 (máquina)
-    // accessibleServers[2] = resultado del Apps Script 3 (maestría)
-    const accessibleServers = results.map(r => (r && r.ok) ? r : null);
-    
-    // Verificar si al menos 1 tiene acceso
-    const hasAccess = accessibleServers.some(s => s !== null);
-    
-    if (hasAccess) {
-      // Si al menos 1 Apps Script valida el email, permitir acceso
+    if (result.hasAccess) {
+      // Guardar datos obtenidos del backend
       localStorage.setItem('userEmail', email);
-      localStorage.setItem('accessibleServers', JSON.stringify(accessibleServers));
+      localStorage.setItem('accessibleServers', JSON.stringify(result.accessibleServers));
       
-      // Guardar whatsapp del primer servidor que respondió
-      const firstValidServer = accessibleServers.find(s => s !== null);
-      if (firstValidServer && firstValidServer.whatsapp) {
-        localStorage.setItem('whatsapp', firstValidServer.whatsapp);
+      // Guardar whatsapp si está disponible
+      if (result.whatsapp) {
+        localStorage.setItem('whatsapp', result.whatsapp);
       }
       
       hideError(errorDiv);
       window.location.href = REDIRECT_PAGE;
     } else {
       // Si ninguno valida, mostrar error
-      showError(errorDiv, 'Email no autorizado en ningún servidor.');
+      showError(errorDiv, result.error || 'Email no autorizado en ningún servidor.');
       submitBtn.disabled = false;
       submitBtn.innerHTML = 'INGRESAR<span class="arrow">→</span>';
     }
   } catch (error) {
-    showError(errorDiv, 'Error conectando con los servidores.');
+    showError(errorDiv, 'Error conectando con los servidores. Intenta más tarde.');
     submitBtn.disabled = false;
     submitBtn.innerHTML = 'INGRESAR<span class="arrow">→</span>';
     console.error('Error:', error);
-  }
-}
-
-/**
- * Valida email en un Apps Script específico
- */
-async function validateEmailInServer(appScriptUrl, email) {
-  try {
-    const params = new URLSearchParams();
-    params.append('email', email);
-    
-    const response = await fetch(appScriptUrl, {
-      method: 'POST',
-      body: params
-    });
-    
-    const data = await response.json();
-    return data; // Retorna { ok: true/false, error?: string }
-  } catch (error) {
-    console.error('Error en servidor ' + appScriptUrl, error);
-    return null; // Si hay error, retorna null
   }
 }
 
