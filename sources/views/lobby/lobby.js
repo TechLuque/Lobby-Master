@@ -5,12 +5,6 @@ const SERVER_TO_LOBBY = {
   2: 3  // Apps Script 3 → Sala 3
 };
 
-const lobbyPages = {
-  1: '../maestria/maestria.html', // Antes tenías 'codigo' aquí, ajústalo según tu carpeta
-  2: '../maquina/maquina.html',
-  3: '../codigo/codigo.html'
-};
-
 // Almacenar salas accesibles globalmente
 let accessibleLobbies = [];
 let whatsappNumber = '573176484451';
@@ -136,3 +130,17 @@ function showNoAccessMessage() {
     noAccessMsg.style.display = 'block';
   }
 }
+
+document.addEventListener('click', function (event) {
+    const button = event.target.closest('.access-btn');
+    if (!button) return;
+
+    const lobbyNumber = Number(button.dataset.lobby);
+
+    if (!lobbyNumber) {
+        console.warn('Botón sin data-lobby válido', button);
+        return;
+    }
+
+    accessLobby(lobbyNumber);
+});

@@ -73,23 +73,37 @@
                                 </div>
                             </div>
                             <div class="box-one _1"></div>
-                            <div class="box-one _2"></div>
-                            <div class="box-two">
-                                <div class="inner-box-div">
-                                    <button type="button" class="access-btn access-btn-1"  title="Maestría del Dinero">
-                                        <img src="../../assets/images/Buttons/MST.png" loading="lazy" alt="Maestría del Dinero"/>
-                                    </button>
-                                    <button type="button" class="access-btn access-btn-2" onclick="accessLobby(2)" title="Máquina del Dinero">
-                                        <img src="../../assets/images/Buttons/MDD.png" loading="lazy" alt="Máquina del Dinero"/>
-                                    </button>
-                                    <button type="button" class="access-btn access-btn-3" onclick="accessLobby(3)" title="Código del Dinero">
-                                        <img src="../../assets/images/Buttons/CDD.png" loading="lazy" alt="Código del Dinero"/>
-                                    </button>
+                                <div class="box-one _2"></div>
+                                    <div class="box-two">
+<div class="inner-box-div">
+
+    <button type="button"
+            class="access-btn access-btn-1"
+            data-lobby="1"
+            title="Código del Dinero">
+        <img src="../../assets/images/Buttons/CDD.png" loading="lazy" />
+    </button>
+
+    <button type="button"
+            class="access-btn access-btn-2"
+            data-lobby="2"
+            title="Máquina del Dinero">
+        <img src="../../assets/images/Buttons/MDD.png" loading="lazy" />
+    </button>
+
+    <button type="button"
+            class="access-btn access-btn-3"
+            data-lobby="3"
+            title="Maestría">
+        <img src="../../assets/images/Buttons/MST.png" loading="lazy" />
+    </button>
+
+</div>
+
+                                    </div>
+                                </div>
                             </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
             </section> 
         </div>
 
@@ -236,7 +250,6 @@
 
         <!-- ===== SCRIPTS ===== -->
         <script src="../../components/navbar.js"></script>
-        <script src="lobby.js"></script>
         
     </body>
 </html>
